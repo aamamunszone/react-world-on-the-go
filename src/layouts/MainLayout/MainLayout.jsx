@@ -5,19 +5,19 @@ import Home from '../../pages/Home/Home';
 
 const MainLayout = () => {
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col justify-between items-center">
       {/* Header Section */}
-      <header className="w-full py-2.5 sticky top-0 bg-white/50 backdrop-blur-lg shadow-lg z-50">
+      <header className="w-full py-2.5 bg-white/50 sticky top-0  backdrop-blur-md shadow-md z-50">
         <Header />
       </header>
 
       {/* Main Section */}
-      <main className="flex flex-1 my-10">
+      <main className="w-full bg-base-200">
         <Home />
       </main>
 
       {/* Footer Section */}
-      <footer className="w-full bg-base-200 text-base-content">
+      <footer className="w-full py-2.5 bg-[lightgray]">
         <Footer />
       </footer>
     </div>

@@ -1,68 +1,37 @@
-import React from 'react';
+import React, { Suspense } from 'react';
+import Countries from '../../features/Countries/Countries';
+import Banner from './Banner';
+
+const fetchCountries = async () => {
+  const res = await fetch('https://openapi.programming-hero.com/api/all');
+  if (!res.ok) throw new Error('Failed to fetch countries.');
+  return await res.json();
+};
+
+const countriesPromise = fetchCountries();
+
+// console.log(countriesPromise);
 
 const Home = () => {
   return (
-    <>
+    <section className="flex flex-col justify-between items-center gap-10">
       {/* Banner/Carousel Section */}
-      <div className="carousel container w-[70%]  mx-auto min-h-full rounded-xl overflow-hidden">
-        <div id="slide1" className="carousel-item relative w-full">
-          <img
-            src="https://img.daisyui.com/images/stock/photo-1625726411847-8cbb60cc71e6.webp"
-            className="w-full"
-          />
-          <div className="absolute left-5 right-5 top-1/2 flex -translate-y-1/2 transform justify-between">
-            <a href="#slide4" className="btn btn-circle">
-              ❮
-            </a>
-            <a href="#slide2" className="btn btn-circle">
-              ❯
-            </a>
+      <Banner />
+      {/* Countries Section */}
+      <Suspense
+        fallback={
+          <div className="w-full text-center text-[forestgreen] text-3xl font-bold py-10">
+            <h1>
+              <span className="loading loading-bars loading-3xl"></span>{' '}
+              Countries Are Loading{' '}
+              <span className="loading loading-bars loading-3xl"></span>
+            </h1>
           </div>
-        </div>
-        <div id="slide2" className="carousel-item relative w-full">
-          <img
-            src="https://img.daisyui.com/images/stock/photo-1609621838510-5ad474b7d25d.webp"
-            className="w-full"
-          />
-          <div className="absolute left-5 right-5 top-1/2 flex -translate-y-1/2 transform justify-between">
-            <a href="#slide1" className="btn btn-circle">
-              ❮
-            </a>
-            <a href="#slide3" className="btn btn-circle">
-              ❯
-            </a>
-          </div>
-        </div>
-        <div id="slide3" className="carousel-item relative w-full">
-          <img
-            src="https://img.daisyui.com/images/stock/photo-1414694762283-acccc27bca85.webp"
-            className="w-full"
-          />
-          <div className="absolute left-5 right-5 top-1/2 flex -translate-y-1/2 transform justify-between">
-            <a href="#slide2" className="btn btn-circle">
-              ❮
-            </a>
-            <a href="#slide4" className="btn btn-circle">
-              ❯
-            </a>
-          </div>
-        </div>
-        <div id="slide4" className="carousel-item relative w-full">
-          <img
-            src="https://img.daisyui.com/images/stock/photo-1665553365602-b2fb8e5d1707.webp"
-            className="w-full"
-          />
-          <div className="absolute left-5 right-5 top-1/2 flex -translate-y-1/2 transform justify-between">
-            <a href="#slide3" className="btn btn-circle">
-              ❮
-            </a>
-            <a href="#slide1" className="btn btn-circle">
-              ❯
-            </a>
-          </div>
-        </div>
-      </div>
-    </>
+        }
+      >
+        <Countries countriesPromise={countriesPromise} />
+      </Suspense>
+    </section>
   );
 };
 
